@@ -13,7 +13,7 @@ The yolov8n-cls model has 1000 classifications (the specific 1000 classification
 
 This model has an input size of `1x3x224x224xF32` and an output size of `1x1000xF32`.
 
-The code will read the [hen.jpg](./hen.jpg) and try infer the most probabely classification, in this case, the output as follows: 
+The code will read the [hen.jpg](./sdcb-openvino-yolov8-cls/hen.jpg) and try infer the most probabely classification, in this case, the output as follows: 
 ```
 class id=hen, score=0.59
 preprocess time: 0.00ms
