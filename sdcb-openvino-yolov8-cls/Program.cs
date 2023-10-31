@@ -4,10 +4,11 @@ using Sdcb.OpenVINO;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using System.Diagnostics;
+using Sdcb.OpenVINO.Extensions.OpenCvSharp4;
 
 public static class Program
 {
-    unsafe static void Main()
+    static void Main()
     {
         string modelFile = @"./model/yolov8n-cls.xml";
         string[] dicts = XDocument.Load(modelFile)
@@ -33,10 +34,7 @@ public static class Program
         using Mat f32 = new();
         resized.ConvertTo(f32, MatType.CV_32FC3, 1.0 / 255);
 
-        using (Tensor input = Tensor.FromRaw(
-            new ReadOnlySpan<byte>((void*)f32.Data, (int)((nint)f32.DataEnd - f32.DataStart)), 
-            new Shape(1, f32.Rows, f32.Cols, 3), 
-            ov_element_type_e.F32))
+        using (Tensor input = f32.AsTensor())
         {
             ir.Inputs.Primary = input;
         }
