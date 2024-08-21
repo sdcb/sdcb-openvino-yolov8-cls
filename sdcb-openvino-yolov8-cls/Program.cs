@@ -29,6 +29,7 @@ public static class Program
         Shape inputShape = m.Inputs.Primary.Shape;
 
         using Mat src = Cv2.ImRead(@"hen.jpg");
+        Cv2.CvtColor(src, src, ColorConversionCodes.BGR2RGB);
         Stopwatch stopwatch = new();
         using Mat resized = src.Resize(new Size(inputShape[2], inputShape[1]));
         using Mat f32 = new();
