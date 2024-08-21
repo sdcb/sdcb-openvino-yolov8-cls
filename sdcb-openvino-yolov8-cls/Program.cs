@@ -21,6 +21,8 @@ public static class Program
         {
             inputInfo.TensorInfo.Layout = Layout.NHWC;
             inputInfo.ModelInfo.Layout = Layout.NCHW;
+            inputInfo.TensorInfo.ColorFormat = ov_color_format_e.BGR;
+            inputInfo.Steps.ConvertColor(ov_color_format_e.RGB);
         }
         using Model m = pp.BuildModel();
         using CompiledModel cm = OVCore.Shared.CompileModel(m, "CPU");
@@ -28,8 +30,7 @@ public static class Program
 
         Shape inputShape = m.Inputs.Primary.Shape;
 
-        using Mat src = Cv2.ImRead(@"hen.jpg");
-        Cv2.CvtColor(src, src, ColorConversionCodes.BGR2RGB);
+        using Mat src = Cv2.ImRead(@"hen.jpg", ImreadModes.Color);
         Stopwatch stopwatch = new();
         using Mat resized = src.Resize(new Size(inputShape[2], inputShape[1]));
         using Mat f32 = new();
